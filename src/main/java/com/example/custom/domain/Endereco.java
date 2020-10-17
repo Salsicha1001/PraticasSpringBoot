@@ -1,5 +1,7 @@
 package com.example.custom.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -15,7 +17,7 @@ public class Endereco implements Serializable {
     private String complemento;
     private String bairro;
     private String cep;
-
+    @JsonBackReference
     @ManyToOne
     private Cliente cliente;
 
