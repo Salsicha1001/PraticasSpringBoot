@@ -1,31 +1,32 @@
 package com.example.custom.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import com.example.custom.domain.enums.EstadoPagamento;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+
 @Entity
-public class Estado  implements Serializable {
+@Inheritance(strategy= InheritanceType.JOINED)
+public abstract class Pagamento implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String name;
+    private Integer estado;
+    @OneToOne
+    @JoinColumn(name="pedido_id")
+    @MapsId
+    private Pedido pedido;
 
-    @JsonBackReference
-    @OneToMany(mappedBy = "estado")
-    private List<Cidade> cidades = new ArrayList<>();
-
-    public Estado() {
+    public Pagamento() {
     }
 
-    public Estado(Integer id, String name) {
+    public Pagamento(Integer id, EstadoPagamento estado, Pedido pedido) {
+        super();
         this.id = id;
-        this.name = name;
+        this.estado = estado.getCod();
+        this.pedido = pedido;
     }
 
     public Integer getId() {
@@ -36,20 +37,20 @@ public class Estado  implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public EstadoPagamento getEstado() {
+        return EstadoPagamento.toEnum(estado);
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setEstado(EstadoPagamento estado) {
+        this.estado = estado.getCod();
     }
 
-    public List<Cidade> getCidades() {
-        return cidades;
+    public Pedido getPedido() {
+        return pedido;
     }
 
-    public void setCidades(List<Cidade> cidades) {
-        this.cidades = cidades;
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
     }
 
     @Override
@@ -68,7 +69,7 @@ public class Estado  implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Estado other = (Estado) obj;
+        Pagamento other = (Pagamento) obj;
         if (id == null) {
             if (other.id != null)
                 return false;
@@ -76,5 +77,7 @@ public class Estado  implements Serializable {
             return false;
         return true;
     }
-}
 
+
+
+}
