@@ -16,7 +16,7 @@ public class Produto implements Serializable {
     private Integer id;
     private String name;
     private double price;
-    @JsonBackReference
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "PRODUTO_CATEGORIA", joinColumns = @JoinColumn(name = "produto_id"),
     inverseJoinColumns =  @JoinColumn(name = "categoria_id"))
