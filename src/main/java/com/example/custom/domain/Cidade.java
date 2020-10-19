@@ -14,7 +14,6 @@ public class Cidade  implements Serializable {
     private Integer id;
     private String name;
 
-    @JsonManagedReference
     @ManyToOne
     private Estado estado;
 
