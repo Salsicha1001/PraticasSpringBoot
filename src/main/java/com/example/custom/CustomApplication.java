@@ -5,10 +5,13 @@ import com.example.custom.domain.enums.EstadoPagamento;
 import com.example.custom.domain.enums.TipoCliente;
 import com.example.custom.repositories.*;
 import com.example.custom.service.CategoriaService;
+import com.example.custom.service.EmailService;
+import com.example.custom.service.MockEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -37,6 +40,8 @@ public class CustomApplication implements CommandLineRunner {
     public static void main(String[] args) {
         SpringApplication.run(CustomApplication.class, args);
     }
+
+
 
     @Override
     public void run(String... args) throws Exception {
@@ -97,7 +102,7 @@ public class CustomApplication implements CommandLineRunner {
         estadoRepository.saveAll(Arrays.asList(est1, est2));
         cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 
-        Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "36378912377", TipoCliente.PESSOAFISICA);
+        Cliente cli1 = new Cliente(null, "Maria Silva", "felumais22@gmail.com", "36378912377", TipoCliente.PESSOAFISICA);
 
         cli1.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
 
