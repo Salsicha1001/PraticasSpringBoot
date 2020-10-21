@@ -1,5 +1,6 @@
 package com.example.custom.domain;
 
+import com.example.custom.domain.enums.Perfil;
 import com.example.custom.domain.enums.TipoCliente;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -8,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
-
+import java.util.stream.Collectors;
 
 
 @Entity
@@ -36,7 +37,10 @@ public class Cliente implements Serializable {
 
     @ElementCollection
     private Set<String> telefone = new HashSet<>();
+    @ElementCollection(fetch=FetchType.EAGER)
+    private Set<Integer> perfis = new HashSet<>();
     public Cliente() {
+        addPerfil(Perfil.CLIENTE);
     }
     public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo,String senha) {
         super();
@@ -46,6 +50,7 @@ public class Cliente implements Serializable {
         this.cpfOuCnpj = cpfOuCnpj;
         this.tipo = (tipo==null) ? null : tipo.getCod();
         this.senha = senha;
+        addPerfil(Perfil.CLIENTE);
     }
 
     public Integer getId() {
@@ -105,7 +110,13 @@ public class Cliente implements Serializable {
     public void setSenha(String senha) {
         this.senha = senha;
     }
+    public Set<Perfil> getPerfis() {
+        return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
+    }
 
+    public void addPerfil(Perfil perfil) {
+        perfis.add(perfil.getCod());
+    }
     @Override
     public int hashCode() {
         final int prime = 31;
