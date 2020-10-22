@@ -7,6 +7,7 @@ import javassist.tools.rmi.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -40,6 +41,7 @@ public class CategoriaResource {
 
 
     @PostMapping("/")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<Void> insert(@RequestBody CategoriaDTO i){
         Categoria obj = categoriaService.fromDto(i);
         obj =categoriaService.insert(obj);
@@ -50,6 +52,7 @@ public class CategoriaResource {
         return ResponseEntity.created(uri).build();
     }
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<Void> update(@RequestBody CategoriaDTO objt, @PathVariable Integer id){
        Categoria obj = categoriaService.fromDto(objt);
         obj.setId(id);
@@ -57,6 +60,7 @@ public class CategoriaResource {
         return  ResponseEntity.noContent().build();
     }
     @RequestMapping(value="/{id}", method=RequestMethod.DELETE)
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         categoriaService.delete(id);
         return ResponseEntity.noContent().build();

@@ -3,12 +3,15 @@ package com.example.custom.service;
 import com.example.custom.domain.Cidade;
 import com.example.custom.domain.Cliente;
 import com.example.custom.domain.Endereco;
+import com.example.custom.domain.enums.Perfil;
 import com.example.custom.domain.enums.TipoCliente;
 import com.example.custom.dto.ClienteDTO;
 import com.example.custom.dto.ClienteNewDTO;
 import com.example.custom.repositories.ClienteRepository;
 import com.example.custom.repositories.EnderecoRepository;
 import com.example.custom.resource.exception.DataIntegrityException;
+import com.example.custom.security.UserSS;
+import com.example.custom.service.exceptions.AuthorizationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -33,6 +36,11 @@ public class ClienteService {
     private EnderecoRepository enderecoRepository;
 
     public Cliente find(Integer id) {
+        UserSS u = UserService.authenticated();
+        if(u == null || !u.hasRole(Perfil.ADMIN)&& !id.equals(u.getId())){
+                throw  new AuthorizationException("Acesso Negado");
+        }
+
         Optional<Cliente> obj = repo.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException(
                 "Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));

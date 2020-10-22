@@ -1,6 +1,7 @@
 package com.example.custom.resource.exception;
 
 
+import com.example.custom.service.exceptions.AuthorizationException;
 import com.example.custom.service.exceptions.ObjectNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 
@@ -34,6 +35,13 @@ public class ResourceExceptionHandler {
             err.addError(x.getField(), x.getDefaultMessage());
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+    }
+
+    @ExceptionHandler(AuthorizationException.class)
+    public ResponseEntity<StandarError> authorization(ObjectNotFoundException e, HttpServletRequest request) {
+
+        StandarError err = new StandarError(HttpStatus.FORBIDDEN.value(), e.getMessage(), System.currentTimeMillis());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(err);
     }
 
 }
