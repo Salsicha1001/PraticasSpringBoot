@@ -1,5 +1,6 @@
 package com.example.custom.service;
 
+import com.example.custom.domain.Cliente;
 import com.example.custom.domain.Pedido;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,6 +12,7 @@ import org.thymeleaf.context.Context;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public abstract class AbstractEmailService implements EmailService {
@@ -64,5 +66,21 @@ public abstract class AbstractEmailService implements EmailService {
         mmh.setSentDate(new Date(System.currentTimeMillis()));
         mmh.setText(htmlFromTemplatePedido(obj), true);
         return mimeMessage;
+    }
+
+    @Override
+    public void sendNewPasswordEmail(Cliente cliente, String newPass) {
+        SimpleMailMessage mm = prepareNewPasswordEmail(cliente, newPass);
+        sendEmail(mm);
+    }
+
+    protected SimpleMailMessage prepareNewPasswordEmail(Cliente cliente, String newPass) {
+        SimpleMailMessage sm = new SimpleMailMessage();
+        sm.setTo(cliente.getEmail());
+        sm.setFrom(sender);
+        sm.setSubject("Solicitação de senha");
+        sm.setSentDate(new Date(System.currentTimeMillis()));
+        sm.setText("Nova Senha : "+ newPass);
+        return sm;
     }
 }
