@@ -14,8 +14,8 @@ public class Produto implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String name;
-    private double price;
+    private String nome;
+    private double preco;
     @JsonIgnore
     @ManyToMany
     @JoinTable(name = "PRODUTO_CATEGORIA", joinColumns = @JoinColumn(name = "produto_id"),
@@ -30,11 +30,11 @@ public class Produto implements Serializable {
     public Produto() {
     }
 
-    public Produto(Integer id, String name, double price) {
+    public Produto(Integer id, String nome, double preco) {
         super();
         this.id = id;
-        this.name = name;
-        this.price = price;
+        this.nome = nome;
+        this.preco = preco;
     }
 
     @JsonIgnore
@@ -54,20 +54,20 @@ public class Produto implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getNome() {
+        return nome;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNome(String name) {
+        this.nome = name;
     }
 
-    public double getPrice() {
-        return price;
+    public double getPreco() {
+        return preco;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setPreco(double price) {
+        this.preco = price;
     }
 
     public List<Categoria> getCategorias() {
@@ -91,14 +91,14 @@ public class Produto implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Produto produto = (Produto) o;
-        return Double.compare(produto.price, price) == 0 &&
+        return Double.compare(produto.preco, preco) == 0 &&
                 Objects.equals(id, produto.id) &&
-                Objects.equals(name, produto.name) &&
+                Objects.equals(nome, produto.nome) &&
                 Objects.equals(categorias, produto.categorias);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, price, categorias);
+        return Objects.hash(id, nome, preco, categorias);
     }
 }

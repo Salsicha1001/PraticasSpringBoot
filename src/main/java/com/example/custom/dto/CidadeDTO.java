@@ -1,23 +1,21 @@
 package com.example.custom.dto;
 
-import com.example.custom.domain.Produto;
+import com.example.custom.domain.Cidade;
 
 import java.io.Serializable;
 
-public class ProdutoDTO implements Serializable {
+public class CidadeDTO  implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Integer id;
     private String nome;
-    private Double price;
 
-    public ProdutoDTO() {
+    public CidadeDTO() {
     }
 
-    public ProdutoDTO(Produto obj) {
+    public CidadeDTO(Cidade obj) {
         id = obj.getId();
-        nome = obj.getNome();
-        price = obj.getPreco();
+        nome = obj.getName();
     }
 
     public Integer getId() {
@@ -34,13 +32,5 @@ public class ProdutoDTO implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double preco) {
-        this.price = preco;
     }
 }

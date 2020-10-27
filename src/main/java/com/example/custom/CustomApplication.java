@@ -5,18 +5,14 @@ import com.example.custom.domain.enums.EstadoPagamento;
 import com.example.custom.domain.enums.Perfil;
 import com.example.custom.domain.enums.TipoCliente;
 import com.example.custom.repositories.*;
-import com.example.custom.service.CategoriaService;
-import com.example.custom.service.EmailService;
-import com.example.custom.service.MockEmailService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
 
 @SpringBootApplication
 public class CustomApplication implements CommandLineRunner {
@@ -46,10 +42,9 @@ public class CustomApplication implements CommandLineRunner {
     }
 
 
-
     @Override
     public void run(String... args) throws Exception {
-        Categoria cat1 = new Categoria(null, "Informática");
+       /* Categoria cat1 = new Categoria(null, "Informática");
         Categoria cat2 = new Categoria(null, "Escritório");
         Categoria cat3 = new Categoria(null, "Cama mesa e banho");
         Categoria cat4 = new Categoria(null, "Eletrônicos");
@@ -148,5 +143,6 @@ public class CustomApplication implements CommandLineRunner {
         p3.getItens().addAll(Arrays.asList(ip2));
 
         itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
+    */
     }
 }
